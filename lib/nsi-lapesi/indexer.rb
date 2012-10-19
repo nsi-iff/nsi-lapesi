@@ -14,19 +14,20 @@ module NSILapesi
       @server = XMLRPC::Client.new(params[:host], params[:path], params[:port])
     end
 
-    def add_image(image, id, author, title, format, type, keywords_list)
+    def add_image(params = {})
+      params = {image: '', id: '', author: 'Lapesi', title: 'LapesiImage', format: 'jpg',
+                type: 'Artigo', keywords: ['lapesi'], publicationdate: ''}.merge(params)
 
-      contract = create_xml_contract id: id, author: author, title: title,
-                                     format: format, type: type, keywords: keywords_list
+      image = params.delete(:image)
+      contract = create_xml_contract params
 
-      raise Errors::ImageFormatNotSupported if not MIMETYPES.include? format
+      raise Errors::ImageFormatNotSupported if not MIMETYPES.include? params[:format]
 
       begin
-        image_content = image.read
+        image_content = (image.class == String)? image : image.read
         status_code = @server.call("ImageIndexer.addImage", XMLRPC::Base64.new(contract),
                                    XMLRPC::Base64.new(image_content))
-      rescue Exception => e
-        puts e.message
+      rescue Exception
         status_code = 111
       end
     end
@@ -42,9 +43,6 @@ module NSILapesi
     private
 
     def create_xml_contract(params = {})
-      params = {id: '', author: '', title: '', format: '',
-                type: '', keywords: '', publicationdate: ''}.merge(params)
-
       params[:publicationdate] = Time.now.strftime("%d/%m/%Y") if params[:publicationdate].empty?
 
       contract = Builder::XmlMarkup.new(indent: 2)
