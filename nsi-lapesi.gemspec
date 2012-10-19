@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Pedro Henrique Linhares"]
   s.date = "2012-10-19"
-  s.description = "TODO: longer description of your gem"
+  s.description = "Gem de acesso ao servico Lapesi"
   s.email = "pedrolmota@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "lib/nsi-lapesi/fake_server.rb",
     "lib/nsi-lapesi/indexer.rb",
     "lib/nsi-lapesi/searcher.rb",
+    "nsi-lapesi.gemspec",
     "spec/configuration_spec.rb",
     "spec/indexer_spec.rb",
     "spec/resources/debian.jpg",
@@ -40,7 +41,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "Gem de acesso ao servico Lapesi"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
