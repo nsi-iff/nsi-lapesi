@@ -1,4 +1,5 @@
 require 'xmlsimple'
+require 'base64'
 
 require File.dirname(__FILE__) + '/configuration'
 require File.dirname(__FILE__) + '/errors'
@@ -11,16 +12,12 @@ module NSILapesi
     end
 
     def search_image(image, limit = 5)
-      image_content = image.read
+      image_content = (image.class == String)? Base64.decode64(image) : image.read
 
       results_xml = @server.call("ImageSearcher.searchImage", XMLRPC::Base64.new(image_content), limit)
       results = XmlSimple.xml_in results_xml
 
-      if results['code'] == '100'
-        results['item']
-      else
-        []
-      end
+      (results['code'] == '100')? results['item'] : []
     end
   end
 end

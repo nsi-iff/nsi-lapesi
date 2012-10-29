@@ -1,5 +1,6 @@
 require 'builder'
 require 'xmlrpc/client'
+require 'base64'
 
 require File.dirname(__FILE__) + '/configuration'
 require File.dirname(__FILE__) + '/errors'
@@ -24,10 +25,11 @@ module NSILapesi
       raise Errors::ImageFormatNotSupported if not MIMETYPES.include? params[:format]
 
       begin
-        image_content = (image.class == String)? image : image.read
+        image_content = (image.class == String)? Base64.decode64(image) : image.read
         status_code = @server.call("ImageIndexer.addImage", XMLRPC::Base64.new(contract),
                                    XMLRPC::Base64.new(image_content))
-      rescue Exception
+      rescue Exception => e
+        puts e.message
         status_code = 111
       end
     end
@@ -35,7 +37,8 @@ module NSILapesi
     def del_image(id)
       begin
         status_code = @server.call("ImageIndexer.delImage", id)
-      rescue Exception
+      rescue Exception => e
+        puts e.message
         status_code = 111
       end
     end
