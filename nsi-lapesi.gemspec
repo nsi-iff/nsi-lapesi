@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "nsi-lapesi"
-  s.version = "0.0.1"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Pedro Henrique Linhares"]
-  s.date = "2012-10-19"
+  s.date = "2012-10-29"
   s.description = "Gem de acesso ao servico Lapesi"
   s.email = "pedrolmota@gmail.com"
   s.extra_rdoc_files = [
@@ -35,12 +35,13 @@ Gem::Specification.new do |s|
     "spec/configuration_spec.rb",
     "spec/indexer_spec.rb",
     "spec/resources/debian.jpg",
+    "spec/searcher_spec.rb",
     "spec/spec_helper.rb"
   ]
   s.homepage = "http://github.com/pedrolinhares/nsi-lapesi"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "1.8.15"
   s.summary = "Gem de acesso ao servico Lapesi"
 
   if s.respond_to? :specification_version then
