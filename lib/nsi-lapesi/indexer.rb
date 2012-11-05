@@ -25,7 +25,12 @@ module NSILapesi
       raise Errors::ImageFormatNotSupported if not MIMETYPES.include? params[:format]
 
       begin
-        image_content = (image.class == String)? Base64.decode64(image) : image.read
+        if image.class == String
+          image_content = Base64.decode64(image)
+        else
+          image.seek 0
+          image_content = image.read
+        end
         status_code = @server.call("ImageIndexer.addImage", XMLRPC::Base64.new(contract),
                                    XMLRPC::Base64.new(image_content))
       rescue Exception => e
